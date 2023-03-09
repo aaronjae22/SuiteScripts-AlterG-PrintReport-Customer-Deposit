@@ -22,6 +22,12 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
          */
         const onRequest = (scriptContext) => {
 
+            let message = 'Suitelet';
+
+            log.debug({title: 'onRequest', details: message});
+
+            scriptContext.response.write(message);
+
         }
 
         return {onRequest}

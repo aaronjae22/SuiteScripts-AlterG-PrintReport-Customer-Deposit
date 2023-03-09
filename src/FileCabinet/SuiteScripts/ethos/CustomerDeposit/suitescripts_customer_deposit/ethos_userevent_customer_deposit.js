@@ -21,6 +21,10 @@ define(['N/query', 'N/record', 'N/runtime', 'N/url'],
          */
         const beforeLoad = (scriptContext) => {
 
+            const isEthos = runtime.getCurrentUser();
+
+            log.debug({title: 'Current User', details: isEthos});
+
         }
 
         /**

@@ -22,7 +22,9 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
          */
         const onRequest = (scriptContext) => {
 
-            getDepositInfo(scriptContext);
+            const depositData = getDepositInfo(scriptContext);
+
+            log.debug({title: 'Deposit Data', details: depositData});
 
         }
 
@@ -67,7 +69,7 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
             const account = customerDeposit.getValue({fieldId: 'account'});
             const memo = customerDeposit.getValue({fieldId: 'memo'});
 
-            const recData = {
+            const depositData = {
                 customer,
                 salesOrder,
                 deposit,
@@ -76,11 +78,55 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
                 transactionDate,
                 postingPeriod,
                 account,
-                memo
+                memo,
+                paymentEvents: [],
             };
 
-            log.debug({title: 'Record Data', details: recData});
+            // Getting Payment Events Info //
+            for (let i = 0; i < lineCount; i++)
+            {
+                let eventRecord = {
+                    transaction: customerDeposit.getSublistValue({
+                        sublistId: paymentEventsListName,
+                        fieldId: 'owningtransaction',
+                        line: i}),
+                    transactionDate: customerDeposit.getSublistValue({
+                        sublistId: paymentEventsListName,
+                        fieldId: 'eventdate',
+                        line: i}),
+                    tranEvent: customerDeposit.getSublistValue({
+                        sublistId: paymentEventsListName,
+                        fieldId: 'type',
+                        line: i}),
+                    tranHandling: customerDeposit.getSublistValue({
+                        sublistId: paymentEventsListName,
+                        fieldId: 'eventtype',
+                        line: i}),
+                    paymentOption: customerDeposit.getSublistValue({
+                        sublistId: paymentEventsListName,
+                        fieldId: 'card',
+                        line: i}),
+                    result: customerDeposit.getSublistValue({
+                        sublistId: paymentEventsListName,
+                        fieldId: 'result',
+                        line: i}),
+                    reason: customerDeposit.getSublistValue({
+                        sublistId: paymentEventsListName,
+                        fieldId: 'holdreason',
+                        line: i}),
+                    amount: customerDeposit.getSublistValue({
+                        sublistId: paymentEventsListName,
+                        fieldId: 'amount',
+                        line: i})
 
+                }
+
+                // log.debug({title: 'Event Record', details: eventRecord});
+                depositData.paymentEvents.push(eventRecord);
+            }
+
+            // log.debug({title: 'Deposit Data', details: depositData});
+            return depositData;
         }
 
         return {onRequest}

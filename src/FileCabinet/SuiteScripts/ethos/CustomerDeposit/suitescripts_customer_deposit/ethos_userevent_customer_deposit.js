@@ -59,6 +59,17 @@ define(['N/query', 'N/record', 'N/runtime', 'N/url'],
             log.debug({title: 'Context Attributes', details: contextAttributes});
             log.debug({title: 'Object and Form', details: contextObjects});
 
+            showPrintButton(thisForm, thisObj);
+
+        }
+
+        const showPrintButton = (thisForm, thisObj) => {
+
+            thisForm.addButton({
+                id: 'custpage_print_customer_deposit_report',
+                label: 'Print',
+            });
+
         }
 
         /**

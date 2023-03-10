@@ -14,9 +14,14 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
          */
         const onRequest = (scriptContext) => {
 
+            if (!scriptContext.request.method === https.Method.GET)
+                return ;
+
             const depositData = getDepositInfo(scriptContext);
 
             log.debug({title: 'Deposit Data', details: depositData});
+
+            return generateReport(scriptContext, depositData);
 
         }
 
@@ -119,6 +124,33 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
 
             // log.debug({title: 'Deposit Data', details: depositData});
             return depositData;
+        }
+
+
+        const generateReport = (scriptContext, depositData) => {
+
+            const reportPDFTemplate = '/SuiteScripts/ethos/CustomerDeposit/html_templates/customer_deposit_report.html';
+
+            const renderer = render.create();
+
+            const templateFile = file.load({id: reportPDFTemplate});
+
+            // log.debug({title: 'Template File', details: templateFile});
+
+            renderer.addCustomDataSource({
+                alias: 'record',
+                format: render.DataSource.OBJECT,
+                data: depositData,
+            });
+
+            renderer.templateContent = templateFile.getContents();
+            log.debug({title: 'Renderer Template Content', details: renderer.templateContent});
+
+            const pdfFile = renderer.renderAsPdf();
+            log.debug({title: 'PDF File', details: pdfFile});
+
+            return scriptContext.response.write(pdfFile, true);
+
         }
 
         return {onRequest}

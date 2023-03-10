@@ -22,11 +22,30 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
          */
         const onRequest = (scriptContext) => {
 
-            let message = 'Suitelet';
+            getDepositInfo(scriptContext);
 
-            log.debug({title: 'onRequest', details: message});
+        }
 
-            scriptContext.response.write(message);
+        const getDepositInfo = (scriptContext) => {
+
+            const params = scriptContext.request.parameters;
+
+            log.debug({title: 'Params', details: params});
+
+            const recId = params.transactionId;
+            const recType = params.recordType;
+
+            /* const scriptContextAttr = {
+                params,
+                recId,
+                recType
+            } */
+
+            if (!recId || !recType)
+                return ;
+
+            if (!params.tpl)
+                return ;
 
         }
 

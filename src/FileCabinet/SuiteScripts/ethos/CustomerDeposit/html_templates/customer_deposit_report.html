@@ -1,4 +1,293 @@
 <?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
 <pdf>
 
+    <!-- HEAD -->
+    <head>
+        <link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}" src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}" src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+        <#if .locale == "zh_CN">
+        <link name="NotoSansCJKsc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKsc_Regular}" src-bold="${nsfont.NotoSansCJKsc_Bold}" bytes="2" />
+        <#elseif .locale == "zh_TW">
+        <link name="NotoSansCJKtc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKtc_Regular}" src-bold="${nsfont.NotoSansCJKtc_Bold}" bytes="2" />
+        <#elseif .locale == "ja_JP">
+        <link name="NotoSansCJKjp" type="font" subtype="opentype" src="${nsfont.NotoSansCJKjp_Regular}" src-bold="${nsfont.NotoSansCJKjp_Bold}" bytes="2" />
+        <#elseif .locale == "ko_KR">
+        <link name="NotoSansCJKkr" type="font" subtype="opentype" src="${nsfont.NotoSansCJKkr_Regular}" src-bold="${nsfont.NotoSansCJKkr_Bold}" bytes="2" />
+        <#elseif .locale == "th_TH">
+        <link name="NotoSansThai" type="font" subtype="opentype" src="${nsfont.NotoSansThai_Regular}" src-bold="${nsfont.NotoSansThai_Bold}" bytes="2" />
+
+    </#if>
+    <macrolist>
+
+        <macro id="nlheader">
+            <table class="header" style="width: 100%; font-size: 10pt;">
+                <tr>
+                    <td rowspan="4">
+                        <#if companyInformation.logoUrl?length != 0>
+                        <img src="${companyInformation.logoUrl}" style="float: left; margin: 0px; width: 80px; height: 40px;" />
+                    </#if>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td align="right"><span class="number">${record@title}</span></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td align="right" colspan="3"><span style="font-weight: bold;">Customer Deposit: &nbsp;</span></td>
+                    <td align="left"><span class="number">#${record.deposit}</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td align="right" colspan="3"><span>Transaction Date:</span></td>
+                    <td align="center" colspan="1">${record.transactionDate}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td align="right" colspan="3"><span>Printed Date:</span></td>
+                    <td align="center" colspan="1">${record.printedDate}</td>
+                </tr>
+            </table>
+        </macro>
+
+
+        <macro id="nlfooter">
+            <table class="footer">
+                <tr>
+
+                </tr>
+            </table>
+        </macro>
+
+    </macrolist>
+
+
+    <style type="text/css">* {
+        <#if .locale == "zh_CN">
+        font-family: NotoSans, NotoSansCJKsc, sans-serif;
+        <#elseif .locale == "zh_TW">
+        font-family: NotoSans, NotoSansCJKtc, sans-serif;
+        <#elseif .locale == "ja_JP">
+        font-family: NotoSans, NotoSansCJKjp, sans-serif;
+        <#elseif .locale == "ko_KR">
+        font-family: NotoSans, NotoSansCJKkr, sans-serif;
+        <#elseif .locale == "th_TH">
+        font-family: NotoSans, NotoSansThai, sans-serif;
+        <#else>
+        font-family: NotoSans, sans-serif;
+        </#if>
+    }
+    table {
+        font-size: 9pt;
+        table-layout: fixed;
+    }
+    th {
+        font-weight: bold;
+        font-size: 8pt;
+        vertical-align: middle;
+        padding: 5px 6px 3px;
+        background-color: #e3e3e3;
+        color: #333333;
+    }
+    td {
+        padding: 4px 6px;
+    }
+    td p { align:left }
+    b {
+        font-weight: bold;
+        color: #333333;
+    }
+    table.header td {
+        padding: 0;
+        font-size: 10pt;
+    }
+    table.footer td {
+        padding: 0;
+        font-size: 8pt;
+    }
+    table.itemtable th {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    table.body td {
+        padding-top: 2px;
+    }
+    td.addressheader {
+        font-size: 8pt;
+        font-weight: bold;
+        padding-top: 6px;
+        padding-bottom: 2px;
+    }
+    td.address {
+        padding-top: 0;
+    }
+    span.title {
+        font-size: 28pt;
+    }
+    span.number {
+        font-size: 16pt;
+    }
+    span.itemname {
+        font-weight: bold;
+        line-height: 150%;
+    }
+    div.returnform {
+        width: 100%;
+        /* To ensure minimal height of return form */
+        height: 200pt;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+    hr {
+        border-top: 1px dashed #d3d3d3;
+        width: 100%;
+        color: #ffffff;
+        background-color: #ffffff;
+        height: 1px;
+    }
+    </style>
+
+    </head>
+
+    <!-- BODY -->
+
+    <body header="nlheader" header-height="10%" footer="nlfooter" footer-height="20pt" padding="0.5in 0.5in 0.5in 0.5in" size="Letter">
+    <#function getItemName val>
+    <#assign comps = val?length>
+    <#return comps[0]>
+
+    </#function>
+    <table>
+        <tr>
+            <td align="left" colspan="4">
+                Subsidiary <br />
+                <span style="font-weight: bold;">${record.subsidiary}</span>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td align="right" colspan="4">
+                Location <br /> <span style="font-weight: bold">${record.location}</span>
+            </td>
+        </tr>
+    </table>
+
+
+    <!-- PRIMARY INFORMATION TABLE HEADERS -->
+    <table class="itemtable" style="width: 100%; margin-top: 10px;">
+
+        <thead>
+        <tr>
+            <th colspan="3" align="left">Customer</th>
+            <th colspan="2">Sales Order</th>
+            <!-- <th colspan="2">Payment Amount</th> -->
+            <th colspan="2">Amount</th>
+            <th colspan="2">Currency</th>
+            <th colspan="2">Deposit #</th>
+            <th colspan="2">Account</th>
+            <th colspan="2">Posting Period</th>
+        </tr>
+        </thead>
+
+        <!-- PRIMARY INFORMATION TABLE VALUES -->
+        <tr>
+            <td colspan="3" align="left">
+                <span>${record.customer}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${record.salesOrder}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${record.paymentAmount}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${record.currency}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${record.deposit}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${record.account}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${record.postingPeriod}</span>
+            </td>
+
+
+        </tr>
+
+    </table>
+
+    <!-- PAYMENT EVENTS TABLE HEADERS -->
+    <#if record.paymentEvents?has_content>
+
+    <br />
+
+    <table>
+        <tr>
+            <td align="left" colspan="4" style="font-weight: bold;">
+                Payment Events <br />
+            </td>
+        </tr>
+    </table>
+
+    <table class="itemtable" style="width: 100%; margin-top: 10px;">
+        <#list record.paymentEvents as tranLine>
+        <!-- PAYMENT EVENT TABLE HEADERS -->
+        <thead>
+        <tr>
+            <th colspan="3" align="left">Transaction</th>
+            <th colspan="2">Transaction Event</th>
+            <th colspan="2">Payment</th>
+            <th colspan="2">Result</th>
+            <th colspan="2">Amount</th>
+            <th colspan="2">Date</th>
+            <!-- <th colspan="1">Deposit</th> -->
+        </tr>
+        </thead>
+
+        <!-- PAYMENT EVENT TABLE VALUES -->
+        <tr>
+
+            <td colspan="3" align="left">
+                <span>${tranLine.transaction}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${tranLine.tranEvent}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${tranLine.amount}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${tranLine.paymentOption}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${tranLine.result}</span>
+            </td>
+
+            <td colspan="2" align="left">
+                <span>${tranLine.transactionDate}</span>
+            </td>
+
+        </tr>
+
+
+    </#list>
+    </table>
+</#if>
+
+</body>
+
 </pdf>

@@ -60,11 +60,18 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
             const deposit = customerDeposit.getValue({fieldId: 'tranid'});
             const paymentAmount = customerDeposit.getValue({fieldId: 'payment'});
             const currency = customerDeposit.getValue({fieldId: 'currencyname'});
+
+            const currentDate = new Date();
+            const printedDate = format.format({type: format.Type.DATE, value: currentDate});
+
             // const transactionDate = customerDeposit.getValue({fieldId: 'trandate'});
             const transactionDate = format.format({type: format.Type.DATE, value: customerDeposit.getValue({fieldId: 'trandate'})});
             const postingPeriod = customerDeposit.getText({fieldId: 'postingperiod'});
             const account = customerDeposit.getValue({fieldId: 'account'});
             const memo = customerDeposit.getValue({fieldId: 'memo'});
+
+            const subsidiary = customerDeposit.getText({fieldId: 'subsidiary'});
+            const location = customerDeposit.getText({fieldId: 'location'});
 
             const depositData = {
                 customer,
@@ -72,10 +79,13 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
                 deposit,
                 paymentAmount,
                 currency,
+                printedDate,
                 transactionDate,
                 postingPeriod,
                 account,
                 memo,
+                subsidiary,
+                location,
                 paymentEvents: [],
             };
 
@@ -87,10 +97,15 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
                         sublistId: paymentEventsListName,
                         fieldId: 'owningtransaction',
                         line: i}),
-                    transactionDate: customerDeposit.getSublistValue({
+                    /* transactionDate: customerDeposit.getSublistValue({
                         sublistId: paymentEventsListName,
                         fieldId: 'eventdate',
-                        line: i}),
+                        line: i}),*/
+                    transactionDate: format.format({type: format.Type.DATE,
+                        value: customerDeposit.getSublistValue({
+                            sublistId : paymentEventsListName,
+                            fieldId : 'eventdate',
+                            line : i})}),
                     tranEvent: customerDeposit.getSublistValue({
                         sublistId: paymentEventsListName,
                         fieldId: 'type',
@@ -149,7 +164,7 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
             const pdfFile = renderer.renderAsPdf();
             log.debug({title: 'PDF File', details: pdfFile});
 
-            return scriptContext.response.write(pdfFile, true);
+            return scriptContext.response.writeFile(pdfFile, true);
 
         }
 

@@ -53,8 +53,8 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
             // log.debug({title: 'Deposit DATA', details: depositData});
 
             return depositData;
-
         }
+
 
         const getDepositData = (scriptContext, customerDeposit) => {
 
@@ -64,7 +64,9 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
 
             // Getting Customer Deposit Primary Info //
             const customer = customerDeposit.getValue({fieldId: 'entityname'});
-            const salesOrder = customerDeposit.getText({fieldId: 'salesorder'});
+            const customerId = customerDeposit.getValue({fieldId: 'customer'});
+            const salesOrderText = customerDeposit.getText({fieldId: 'salesorder'});
+            const salesOrder = customerDeposit.getValue({fieldId: 'salesorder'});
             const deposit = customerDeposit.getValue({fieldId: 'tranid'});
             const paymentAmount = customerDeposit.getValue({fieldId: 'payment'});
             const currency = customerDeposit.getValue({fieldId: 'currencyname'});
@@ -80,10 +82,24 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
             const subsidiary = customerDeposit.getText({fieldId: 'subsidiary'});
             const location = customerDeposit.getText({fieldId: 'location'});
 
-            const shipTo = customerDeposit.getText({fieldId: 'custbody_shipto_address'});
-            log.debug({title: 'Ship to', details: shipTo});
+            /* const shipTo = customerDeposit.getText({fieldId: 'custbody_shipto_address'});
+            const shipToSplit = shipTo.split('\n');
+            log.debug({title: 'Ship Split Info', details: shipToSplit}); */
 
-            // const billTo = customerDeposit.getValue({fieldId: 'request'});
+            // const shippingData = getShippingData(customerId)[0];
+            // log.debug({title: 'Customer Shipping Data', details: shippingData});
+
+            // LOAD SALES ORDER REC //
+            const salesOrderRec = record.load({id: salesOrder, type: 'salesorder', isDynamic: true});
+            log.debug({title: 'Sales Order Record', details: salesOrderRec});
+
+            let shippingData = salesOrderRec.getValue({fieldId: 'shipaddress'});
+            // shippingData = shippingData.split("\n");
+            log.debug({title: 'Shipping Data', details: shippingData});
+
+            let billData = salesOrderRec.getValue({fieldId: 'billaddress'});
+            // billData = billData.split("\n");
+            log.debug({title: 'Billing Data', details: billData});
 
             const depositData = {
                 customer,
@@ -98,6 +114,8 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
                 memo,
                 subsidiary,
                 location,
+                shippingData,
+                billData,
                 paymentEvents: [],
             };
 
@@ -175,6 +193,25 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
 
         }
 
+        const getShippingData = (customerId) => {
+
+            // let sql = `SELECT * FROM Customer WHERE id = ?`;
+
+            let sql = `SELECT companyname as companyName,
+                                custentity_territory_shipping_address_1 as shippingAddress1,
+                                custentity_territory_shipping_address_2 as shippingAddress2,
+                                custentity_territory_shipping_city as shippingCity,
+                                custentity_territory_shipping_states as shippingState,
+                                custentity_territory_shipping_zip as shippingZip,
+                                custentity_territory_country as shippingCountry
+                        FROM Customer
+                        WHERE id = ?`;
+
+            return query.runSuiteQL({query: sql, params: [customerId]}).asMappedResults();
+
+        }
+
         return {onRequest}
 
     });
+

@@ -174,19 +174,15 @@
         </tr>
     </table>
 
-    <br />
+    <!-- <br /> -->
 
-    <table>
+    <table style="margin-top: 25px;">
         <tr>
             <td  align="left" colspan="4">
                 <span style="font-weight: bold"> Bill To <br /></span>
                 <span></span>
                 <br />
-                <span>${record.billStreet}</span>
-                <br />
-                <span>${record.billCity}</span>
-                <br />
-                <span>${record.billCountry}</span>
+                <span>${record.billData?html}</span>
             </td>
             <td></td>
             <td></td>
@@ -195,17 +191,13 @@
         </tr>
     </table>
 
-
-    <table>
+    <table style="margin-top: 18px; margin-bottom: 20px">
         <tr>
             <td  align="left" colspan="4">
                 <span style="font-weight: bold"> Ship To <br /></span>
                 <span>${record.shipEntity}</span>
                 <br />
-                <span>${record.shipStreet}</span>
-                <br />
-                <span>${record.shipCity}</span>
-                <br />
+                <span>${record.shippingData}</span>
             </td>
             <td></td>
             <td></td>
@@ -214,6 +206,18 @@
         </tr>
     </table>
 
+    <!-- TESTING -->
+    <!-- <table>
+        <#assign x=3>
+        <#list 1..x as i>
+            <tr>
+                <td align="left" colspan="4" style="font-weight: bold;">
+                    ${i} <br />
+                </td>
+            </tr>
+        </#list>
+
+    </table> -->
 
 
     <!-- PRIMARY INFORMATION TABLE HEADERS -->

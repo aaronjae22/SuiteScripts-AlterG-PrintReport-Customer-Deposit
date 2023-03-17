@@ -82,7 +82,7 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
 
             const transactionDate = format.format({type: format.Type.DATE, value: customerDeposit.getValue({fieldId: 'trandate'})});
             const postingPeriod = customerDeposit.getText({fieldId: 'postingperiod'});
-            const account = customerDeposit.getValue({fieldId: 'account'});
+            const account = customerDeposit.getText({fieldId: 'account'});
             const memo = customerDeposit.getValue({fieldId: 'memo'});
 
             const subsidiary = customerDeposit.getText({fieldId: 'subsidiary'});

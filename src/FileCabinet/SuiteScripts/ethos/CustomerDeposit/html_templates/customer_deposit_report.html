@@ -176,6 +176,32 @@
 
     <!-- <br /> -->
 
+    <table style="margin-top: 18px; margin-bottom: 30px">
+        <tr>
+            <td  align="left" colspan="4">
+                <span style="font-weight: bold"> Ship To <br /></span>
+                <!-- <br /> -->
+                <span>${record.shippingData}</span>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td  align="right" colspan="4"  style="margin-left: 10px">
+                <span style="font-weight: bold"> Bill To <br /></span>
+                <!-- <br /> -->
+                <span>${record.billData}</span>
+            </td>
+        </tr>
+    </table>
+
+
+    <!--
     <table style="margin-top: 25px;">
         <tr>
             <td  align="left" colspan="4">
@@ -190,21 +216,8 @@
             <td></td>
         </tr>
     </table>
+    -->
 
-    <table style="margin-top: 18px; margin-bottom: 20px">
-        <tr>
-            <td  align="left" colspan="4">
-                <span style="font-weight: bold"> Ship To <br /></span>
-                <span>${record.shipEntity}</span>
-                <br />
-                <span>${record.shippingData}</span>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
 
     <!-- TESTING -->
     <!-- <table>
@@ -226,7 +239,8 @@
         <thead>
         <tr>
             <th colspan="3" align="left">Customer</th>
-            <th colspan="2">Sales Order</th>
+            <th colspan="2">Transaction</th>
+            <!-- <th colspan="2">Sales Order</th> -->
             <!-- <th colspan="2">Payment Amount</th> -->
             <th colspan="2">Amount</th>
             <th colspan="2">Currency</th>
@@ -242,8 +256,12 @@
                 <span>${record.customer}</span>
             </td>
 
-            <td colspan="2" align="left">
+            <!-- <td colspan="2" align="left">
                 <span>${record.salesOrder}</span>
+            </td> -->
+
+            <td colspan="2" align="left">
+                <span>${record.deposit}</span>
             </td>
 
             <td colspan="2" align="left">

@@ -182,7 +182,7 @@
                 <span style="font-weight: bold"> Bill To <br /></span>
                 <span></span>
                 <br />
-                <span>${record.billData?html}</span>
+                <span>${record.billData}</span>
             </td>
             <td></td>
             <td></td>
@@ -292,7 +292,7 @@
             <th colspan="3" align="left">Transaction</th>
             <th colspan="2">Transaction Event</th>
             <th colspan="2">Amount</th>
-            <th colspan="2">Payment Opt</th>
+            <!-- <th colspan="2">Payment Opt</th> -->
             <th colspan="2">Date</th>
             <th colspan="2">Result</th>
             <!-- <th colspan="1">Deposit</th> -->
@@ -314,9 +314,11 @@
                 <span>${tranLine.amount}</span>
             </td>
 
+            <!--
             <td colspan="2" align="left">
                 <span>${tranLine.paymentOption}</span>
             </td>
+            -->
 
             <td colspan="2" align="left">
                 <span>${tranLine.transactionDate}</span>

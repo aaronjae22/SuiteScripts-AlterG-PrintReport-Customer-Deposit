@@ -2,6 +2,12 @@
  * @NApiVersion 2.1
  * @NScriptType UserEventScript
  */
+
+/**
+ * Customer Deposits: https://910658.app.netsuite.com/app/accounting/transactions/transactionlist.nl?Transaction_TYPE=CustDep&whence=
+ * User Event Script Deployment: https://910658.app.netsuite.com/app/common/scripting/scriptrecord.nl?id=2973&whence=
+ */
+
 define(['N/query', 'N/record', 'N/runtime', 'N/url'],
     /**
  * @param{query} query

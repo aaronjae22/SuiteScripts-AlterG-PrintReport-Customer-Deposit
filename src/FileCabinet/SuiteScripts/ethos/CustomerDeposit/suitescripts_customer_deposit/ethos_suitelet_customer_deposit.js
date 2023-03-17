@@ -2,6 +2,12 @@
  * @NApiVersion 2.1
  * @NScriptType Suitelet
  */
+
+/**
+ * Customer Deposits: https://910658.app.netsuite.com/app/accounting/transactions/transactionlist.nl?Transaction_TYPE=CustDep&whence=
+ * Suitelet Script Deployment: https://910658.app.netsuite.com/app/common/scripting/scriptrecord.nl?id=2974&whence=
+ */
+
 define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/runtime'],
 
     (file, format, https, query, record, render, runtime) => {
@@ -93,12 +99,14 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
             const salesOrderRec = record.load({id: salesOrder, type: 'salesorder', isDynamic: true});
             log.debug({title: 'Sales Order Record', details: salesOrderRec});
 
-            let shippingData = salesOrderRec.getValue({fieldId: 'shipaddress'});
+            let shippingData = salesOrderRec.getValue({fieldId: 'shipaddress'}) || "";
             // shippingData = shippingData.split("\n");
+            shippingData = shippingData.replaceAll("\n", "<br/>");
             log.debug({title: 'Shipping Data', details: shippingData});
 
-            let billData = salesOrderRec.getValue({fieldId: 'billaddress'});
+            let billData = salesOrderRec.getValue({fieldId: 'billaddress'}) || "";
             // billData = billData.split("\n");
+            billData = billData.replaceAll("\n", "<br/>");
             log.debug({title: 'Billing Data', details: billData});
 
             const depositData = {

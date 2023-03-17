@@ -71,8 +71,12 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
             // Getting Customer Deposit Primary Info //
             const customer = customerDeposit.getValue({fieldId: 'entityname'});
             const customerId = customerDeposit.getValue({fieldId: 'customer'});
-            const salesOrderText = customerDeposit.getText({fieldId: 'salesorder'});
+
+            let salesOrderText = customerDeposit.getText({fieldId: 'salesorder'});
+            salesOrderText = salesOrderText.split(" ");
+            salesOrderText = salesOrderText[2];
             const salesOrder = customerDeposit.getValue({fieldId: 'salesorder'});
+
             const deposit = customerDeposit.getValue({fieldId: 'tranid'});
             const paymentAmount = customerDeposit.getValue({fieldId: 'payment'});
             const currency = customerDeposit.getValue({fieldId: 'currencyname'});
@@ -111,6 +115,7 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
 
             const depositData = {
                 customer,
+                salesOrderText,
                 salesOrder,
                 deposit,
                 paymentAmount,

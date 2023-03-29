@@ -38,6 +38,7 @@
                     <td align="right" colspan="3"><span style="font-weight: bold;">Payment Receipt: &nbsp;</span></td>
                     <td align="left"><span class="number">#${record.deposit}</span></td>
                 </tr>
+
                 <tr>
                     <td></td>
                     <td></td>
@@ -52,6 +53,21 @@
                     <td align="center" colspan="1">${record.printedDate}</td>
                 </tr>
                 -->
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td align="right" colspan="3"><span>Payment Method:</span></td>
+                    <td align="center" colspan="1">${record.paymentMethod}</td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td align="right" colspan="3"><span>Credit Card #: </span></td>
+                    <td align="right" colspan="2">${record.creditCardNumber}</td>
+                </tr>
+
             </table>
         </macro>
 
@@ -190,13 +206,13 @@
     </table>
     -->
 
-    <!-- <br /> -->
+    <br />
 
     <table class="addresses-table" style="margin-top: 22px; margin-bottom: 30px">
         <tr>
             <!-- <td class="billAddress" align="left" colspan="4"  style="margin-right: 10px"> -->
             <td class="billAddress" align="left" colspan="4">
-                <span style="font-weight: bold"> Bill To <br /></span>
+                <span style="font-weight: bold">Bill To <br /></span>
                 <!-- <br /> -->
                 <span>${record.billData}</span>
             </td>
@@ -210,19 +226,11 @@
             <td></td>
             <td></td> -->
 
-
-
             <td class="shipAddress" align="right" colspan="4">
                 <span style="font-weight: bold"> Ship To <br /></span>
                 <span>${record.shippingData}</span>
             </td>
 
-
-
-            <!-- <td  align="right" colspan="4"  style="margin-left: 10px">
-                <span style="font-weight: bold"> Bill To <br /></span>
-                <span>${record.billData}</span>
-            </td> -->
         </tr>
     </table>
 
@@ -270,8 +278,8 @@
             <th colspan="2">Amount</th>
             <th colspan="2">Currency</th>
             <th colspan="2">Deposit #</th>
-            <th colspan="2">Account</th>
-            <th colspan="2">Posting Period</th>
+            <!-- th colspan="2">Account</th> -->
+            <!-- <th colspan="2">Posting Period</th> -->
         </tr>
         </thead>
 
@@ -301,13 +309,13 @@
                 <span>${record.deposit}</span>
             </td>
 
-            <td colspan="2" align="left">
+            <!-- <td colspan="2" align="left">
                 <span>${record.account}</span>
-            </td>
+            </td> -->
 
-            <td colspan="2" align="left">
+            <!-- <td colspan="2" align="left">
                 <span>${record.postingPeriod}</span>
-            </td>
+            </td> -->
 
 
         </tr>

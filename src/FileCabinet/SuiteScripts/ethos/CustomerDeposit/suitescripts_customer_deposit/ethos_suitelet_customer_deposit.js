@@ -92,6 +92,9 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
             const subsidiary = customerDeposit.getText({fieldId: 'subsidiary'});
             const location = customerDeposit.getText({fieldId: 'location'});
 
+            const paymentMethod = customerDeposit.getText({fieldId: 'paymentmethod'});
+            const creditCardNumber = customerDeposit.getValue({fieldId: 'ccnumber'});
+
             /* const shipTo = customerDeposit.getText({fieldId: 'custbody_shipto_address'});
             const shipToSplit = shipTo.split('\n');
             log.debug({title: 'Ship Split Info', details: shipToSplit}); */
@@ -127,6 +130,8 @@ define(['N/file', 'N/format', 'N/https', 'N/query', 'N/record', 'N/render', 'N/r
                 memo,
                 subsidiary,
                 location,
+                paymentMethod,
+                creditCardNumber,
                 shippingData,
                 billData,
                 paymentEvents: [],

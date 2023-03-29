@@ -23,7 +23,8 @@
                 <tr>
                     <td rowspan="4">
                         <#if companyInformation.logoUrl?length != 0>
-                        <img src="${companyInformation.logoUrl}" style="float: left; margin: 0px; width: 80px; height: 40px;" />
+                        <!-- <img src="${companyInformation.logoUrl}" style="float: left; margin: 0px; width: 80px; height: 40px;" /> -->
+                        <img src="${companyInformation.logoUrl}" style="float: left; margin: 0px; width: 130px; height: 70px;" />
                     </#if>
                     </td>
                     <td></td>
@@ -34,7 +35,7 @@
                 <tr>
                     <td></td>
                     <td></td>
-                    <td align="right" colspan="3"><span style="font-weight: bold;">Customer Deposit: &nbsp;</span></td>
+                    <td align="right" colspan="3"><span style="font-weight: bold;">Payment Receipt: &nbsp;</span></td>
                     <td align="left"><span class="number">#${record.deposit}</span></td>
                 </tr>
                 <tr>
@@ -43,12 +44,14 @@
                     <td align="right" colspan="3"><span>Transaction Date:</span></td>
                     <td align="center" colspan="1">${record.transactionDate}</td>
                 </tr>
+                <!--
                 <tr>
                     <td></td>
                     <td></td>
                     <td align="right" colspan="3"><span>Printed Date:</span></td>
                     <td align="center" colspan="1">${record.printedDate}</td>
                 </tr>
+                -->
             </table>
         </macro>
 
@@ -147,6 +150,16 @@
         background-color: #ffffff;
         height: 1px;
     }
+
+    .addresses-table {
+        /* background: red; */
+        width: 100%
+    }
+
+    .shipAddress {
+        text-align: right;
+    }
+
     </style>
 
     </head>
@@ -159,6 +172,8 @@
     <#return comps[0]>
 
     </#function>
+
+    <!--
     <table>
         <tr>
             <td align="left" colspan="4">
@@ -173,33 +188,43 @@
             </td>
         </tr>
     </table>
+    -->
 
     <!-- <br /> -->
 
-    <table style="margin-top: 18px; margin-bottom: 30px">
+    <table class="addresses-table" style="margin-top: 22px; margin-bottom: 30px">
         <tr>
-            <td  align="left" colspan="4">
-                <span style="font-weight: bold"> Ship To <br /></span>
-                <!-- <br /> -->
-                <span>${record.shippingData}</span>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td  align="right" colspan="4"  style="margin-left: 10px">
+            <!-- <td class="billAddress" align="left" colspan="4"  style="margin-right: 10px"> -->
+            <td class="billAddress" align="left" colspan="4">
                 <span style="font-weight: bold"> Bill To <br /></span>
                 <!-- <br /> -->
                 <span>${record.billData}</span>
             </td>
+
+            <!-- <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td> -->
+
+
+
+            <td class="shipAddress" align="right" colspan="4">
+                <span style="font-weight: bold"> Ship To <br /></span>
+                <span>${record.shippingData}</span>
+            </td>
+
+
+
+            <!-- <td  align="right" colspan="4"  style="margin-left: 10px">
+                <span style="font-weight: bold"> Bill To <br /></span>
+                <span>${record.billData}</span>
+            </td> -->
         </tr>
     </table>
-
 
     <!--
     <table style="margin-top: 25px;">

@@ -354,7 +354,7 @@
         </tr>
     </table>
 
-    <table class="itemtable" style="width: 100%; margin-top: 10px;">
+    <table class="itemtable" style="width: 100%; margin-top: 8px;">
         <#list record.paymentEvents as tranLine>
         <!-- PAYMENT EVENT TABLE HEADERS -->
         <thead>
@@ -404,6 +404,20 @@
     </#list>
     </table>
 </#if>
+
+    <#if record.paymentEvents?has_content>
+
+        <div style="width: 100%; font-size: 10px; margin-top: 380px">
+            <span>If you have any questions, please reach out to us via e-mail at ar@alterg.com</span>
+        </div>
+
+    <#else>
+
+        <div style="width: 100%; font-size: 10px; margin-top: 510px">
+            <span>If you have any questions, please reach out to us via e-mail at ar@alterg.com</span>
+        </div>
+
+    </#if>
 
 </body>
 
